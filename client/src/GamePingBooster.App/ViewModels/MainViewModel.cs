@@ -43,6 +43,7 @@ public sealed class MainViewModel : INotifyPropertyChanged
     public List<GameOption> Games { get; } =
     [
         new("pubg", "PUBG: BATTLEGROUNDS"),
+        new("vrchat", "VRChat"),
         new("cs2", "Counter-Strike 2"),
         new("valorant", "Valorant"),
         new("dota2", "Dota 2"),

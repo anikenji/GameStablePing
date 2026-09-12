@@ -230,6 +230,65 @@
           ]
         }
       ]
+    },
+    {
+      "id": "vrchat",
+      "name": "VRChat",
+      "processNames": [
+        "VRChat.exe",
+        "VRChat"
+      ],
+      "lobbyAddresses": [],
+      "regions": [
+        {
+          "id": "vrchat-jp",
+          "name": "Japan (Tokyo - AWS ap-northeast-1)",
+          "source": "aws:ap-northeast-1",
+          "note": "VRChat Japan instances (Tokyo)",
+          "landmarks": [
+            "13.112.0.1",
+            "18.176.0.1"
+          ],
+          "cidrs": [
+            "13.112.0.0/14",
+            "13.230.0.0/15",
+            "18.176.0.0/14",
+            "52.192.0.0/15",
+            "54.64.0.0/14",
+            "54.95.0.0/16",
+            "54.150.0.0/16"
+          ]
+        },
+        {
+          "id": "vrchat-sg",
+          "name": "Southeast Asia (Singapore - AWS ap-southeast-1)",
+          "source": "aws:ap-southeast-1",
+          "note": "VRChat SEA instances (Singapore)",
+          "landmarks": [
+            "13.250.0.1"
+          ],
+          "cidrs": [
+            "13.250.0.0/15",
+            "18.136.0.0/14",
+            "52.74.0.0/15",
+            "54.254.0.0/15",
+            "54.255.0.0/16"
+          ]
+        },
+        {
+          "id": "vrchat-usw",
+          "name": "US West (Oregon - AWS us-west-2)",
+          "source": "aws:us-west-2",
+          "note": "VRChat US West instances",
+          "landmarks": [
+            "54.184.0.1"
+          ],
+          "cidrs": [
+            "54.184.0.0/13",
+            "52.32.0.0/12"
+          ]
+        }
+      ]
     }
   ]
 }
