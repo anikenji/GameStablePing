@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.IO;
+using System.ServiceProcess;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -24,6 +27,40 @@ public partial class App : Application
     private IClassicDesktopStyleApplicationLifetime? _desktop;
     private MainViewModel? _vm;
 
+    private static void EnsureServiceRunning()
+    {
+        try
+        {
+            if (Process.GetProcessesByName("gpb-service").Length > 0) return;
+
+            try
+            {
+                using var sc = new ServiceController("GamePingBooster");
+                if (sc.Status != ServiceControllerStatus.Running)
+                {
+                    sc.Start();
+                    return;
+                }
+            }
+            catch { }
+
+            var servicePath = Path.Combine(AppContext.BaseDirectory, "gpb-service.exe");
+            if (File.Exists(servicePath))
+            {
+                var psi = new ProcessStartInfo
+                {
+                    FileName = servicePath,
+                    Arguments = "--console",
+                    UseShellExecute = true,
+                    Verb = "runas",
+                    WindowStyle = ProcessWindowStyle.Hidden
+                };
+                Process.Start(psi);
+            }
+        }
+        catch { }
+    }
+
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
@@ -31,6 +68,7 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             _desktop = desktop;
+            EnsureServiceRunning();
             _pipe = new PipeClient();
             var vm = new MainViewModel(_pipe);
             _vm = vm;

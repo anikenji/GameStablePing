@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace GamePingBooster.App.ViewModels;
@@ -20,7 +20,7 @@ public sealed class SettingsViewModel : INotifyPropertyChanged
     private readonly bool _alreadyConfigured;
 
     public SettingsViewModel(IEnumerable<string>? currentEndpoints, bool alreadyConfigured,
-        string? currentLicenceUrl = "https://gamepingbooster.com")
+        string? currentLicenceUrl = "https://gameapi.anikenji.tech")
     {
         _endpoints = string.Join(Environment.NewLine, currentEndpoints ?? []);
         _alreadyConfigured = alreadyConfigured;

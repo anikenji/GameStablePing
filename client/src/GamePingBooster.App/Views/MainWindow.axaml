@@ -181,8 +181,13 @@
       <Border Grid.Row="0" Grid.ColumnSpan="2"
               Background="#20252b" CornerRadius="8" Padding="12" Margin="0,0,0,12"
               IsVisible="{Binding NeedsSetup}">
-        <TextBlock Foreground="#869bb3" FontSize="12" TextWrapping="Wrap"
-                   Text="No relay configured yet. Open Settings and enter your relay's address and key." />
+        <StackPanel Spacing="8">
+          <TextBlock Foreground="#869bb3" FontSize="12" TextWrapping="Wrap"
+                     Text="Chưa đăng nhập tài khoản GSP. Hãy bấm nút 'Đăng nhập' để tự động tải danh sách máy chủ Relay." />
+          <Button Content="Đăng nhập tài khoản" Click="OnAccountClick"
+                  HorizontalAlignment="Left" Padding="12,6" FontSize="12" FontWeight="SemiBold"
+                  CornerRadius="6" Background="#2563EB" Foreground="White" />
+        </StackPanel>
       </Border>
 
       <Button Grid.Row="1" Grid.ColumnSpan="2"

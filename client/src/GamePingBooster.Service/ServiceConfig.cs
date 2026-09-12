@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace GamePingBooster.Service;
@@ -28,7 +28,7 @@ public sealed class ServiceConfig
     /// that answers "what is this client pointed at". The UI cannot read this file, so it comes
     /// back over the pipe with the status - it is a URL, not a credential.
     /// </summary>
-    [JsonPropertyName("licenceUrl")] public string? LicenceUrl { get; set; }
+    [JsonPropertyName("licenceUrl")] public string? LicenceUrl { get; set; } = "https://gameapi.anikenji.tech";
 
     /// <summary>Default relay id; empty means take the first relay in the profile.</summary>
     [JsonPropertyName("defaultRelayId")] public string? DefaultRelayId { get; set; }

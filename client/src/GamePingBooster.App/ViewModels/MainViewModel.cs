@@ -76,10 +76,10 @@ public sealed class MainViewModel : INotifyPropertyChanged
     // All of this is absent on a self-hosted installation, which is the default and stays the
     // default: no licenceUrl means no sign-in button, no licence line, nothing to explain.
 
-    private string? _licenceUrl;
+    private string? _licenceUrl = "https://gameapi.anikenji.tech";
     public string? LicenceUrl
     {
-        get => _licenceUrl;
+        get => _licenceUrl ?? "https://gameapi.anikenji.tech";
         private set { if (Set(ref _licenceUrl, value)) Raise(nameof(ShowLicence)); }
     }
 
@@ -158,7 +158,7 @@ public sealed class MainViewModel : INotifyPropertyChanged
     public IBrush LicenceBrush => LicenceBlocked ? Brushes.Orange : LicenceQuiet;
 
     /// <summary>Whether this installation has a licence server at all.</summary>
-    public bool ShowLicence => !string.IsNullOrWhiteSpace(LicenceUrl);
+    public bool ShowLicence => true;
 
     /// <summary>What the menu item says. One entry, two states, no dead end either way.</summary>
     public string AccountMenuText => HasToken ? "Account" : "Sign in";
