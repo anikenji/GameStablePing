@@ -6,7 +6,7 @@ module.exports = {
       script: "/home/kenji/.bun/bin/bun",
       args: "run server/src/index.ts",
       env: {
-        PORT: "8080",
+        PORT: "20080",
         NODE_ENV: "production"
       },
       restart_delay: 3000,

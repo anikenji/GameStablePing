@@ -5,7 +5,7 @@ import crypto from "node:crypto";
 import { mintLicenceToken } from "./token.js";
 import { sealProfileBundle } from "./envelope.js";
 
-const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 20080;
 const DATA_DIR = path.resolve("server/data");
 const CONFIG_DIR = path.resolve("server/config");
 const KEYS_DIR = path.resolve("server/keys");
