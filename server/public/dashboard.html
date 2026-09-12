@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Quản Lý - GSP GameStablePing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #090d16; }
+    .bg-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="bg-[#090d16] bg-grid min-h-screen text-slate-100 selection:bg-emerald-500 selection:text-white">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-sm text-white">⚡</div>
+        <span class="font-extrabold text-lg text-white">GSP Portal</span>
+      </a>
+
+      <div class="flex items-center gap-4">
+        <span id="userEmail" class="text-xs font-mono text-slate-400">...</span>
+        <button onclick="logout()" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+          Đăng xuất
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-10 space-y-8">
+
+    <!-- Top Status Banner -->
+    <div class="grid md:grid-cols-3 gap-6">
+      
+      <!-- Subscription Card -->
+      <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 relative overflow-hidden">
+        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Gói cước hiện tại</div>
+        <div class="flex items-baseline gap-2">
+          <span id="planName" class="text-2xl font-extrabold text-emerald-400">Đang tải...</span>
+          <span id="planBadge" class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">Active</span>
+        </div>
+        <div class="text-xs text-slate-400 mt-2">
+          Hạn sử dụng: <strong id="planExpiry" class="text-slate-200">...</strong>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs">
+          <span class="text-slate-400">Giới hạn thiết bị:</span>
+          <span id="deviceLimit" class="font-bold text-white">1 PC</span>
+        </div>
+      </div>
+
+      <!-- Quick Download App -->
+      <div class="p-6 rounded-2xl bg-gradient-to-br from-blue-950/40 to-slate-900/80 border border-blue-500/30 flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-2">Tải ứng dụng Desktop</div>
+          <div class="text-lg font-bold text-white">GSP Client cho Windows</div>
+          <p class="text-xs text-slate-400 mt-1">Bản phát hành Native AOT v0.2.2 x64 không cần cài .NET runtime.</p>
+        </div>
+        <a href="/download" class="mt-4 w-full py-2.5 rounded-xl font-semibold text-xs bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          <span>Tải bản Windows (.ZIP)</span>
+        </a>
+      </div>
+
+      <!-- Relay Fleet Overview -->
+      <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Hạ tầng Relay Fleet</div>
+          <div class="text-lg font-bold text-white">5 Máy Chủ Sẵn Sàng</div>
+          <p class="text-xs text-slate-400 mt-1">Singapore #1, #2, Tokyo #1, Hong Kong #1 đang trực tuyến với thuật toán BBR.</p>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center gap-2 text-xs text-emerald-400 font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>100% Tuyến đường thông suốt</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Device Management Section -->
+    <div class="p-7 rounded-3xl bg-slate-900/70 border border-slate-800">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-lg font-bold text-white">Thiết bị đang liên kết</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Danh sách các máy tính được cấp quyền kết nối tới Relay VPS</p>
+        </div>
+      </div>
+
+      <div id="deviceList" class="space-y-3">
+        <div class="text-center py-6 text-xs text-slate-500 font-mono">Đang tải danh sách thiết bị...</div>
+      </div>
+    </div>
+
+    <!-- Upgrade / Renew Section -->
+    <div class="p-7 rounded-3xl bg-slate-900/70 border border-slate-800">
+      <div class="mb-6">
+        <h2 class="text-lg font-bold text-white">Gia hạn / Nâng cấp gói cước</h2>
+        <p class="text-xs text-slate-400 mt-0.5">Quét mã VietQR tự động kích hoạt gói cước trong vòng 30 giây</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Plan 1 -->
+        <div class="p-6 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-slate-700 transition flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold text-blue-400 uppercase tracking-wider">Tiêu Chuẩn (1 Thiết Bị)</div>
+            <div class="text-3xl font-extrabold text-white mt-2">49.000 đ <span class="text-xs font-normal text-slate-400">/ 30 ngày</span></div>
+            <ul class="text-xs text-slate-300 space-y-2.5 mt-4">
+              <li class="flex items-center gap-2">✓ Toàn bộ 5+ máy chủ Relay VIP (Sing, Tokyo, HK)</li>
+              <li class="flex items-center gap-2">✓ Tự động nạp route /32 theo thời gian thực</li>
+              <li class="flex items-center gap-2">✓ Không bao giờ rớt kết nối giữa trận</li>
+            </ul>
+          </div>
+          <button onclick="createPayment('standard_49k')" class="mt-6 w-full py-3 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-white transition">
+            Gia hạn gói này (49.000 đ)
+          </button>
+        </div>
+
+        <!-- Plan 2 -->
+        <div class="p-6 rounded-2xl bg-slate-950/70 border border-emerald-500/30 hover:border-emerald-500/50 transition flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            TIẾT KIỆM
+          </div>
+          <div>
+            <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Dual (2 Thiết Bị)</div>
+            <div class="text-3xl font-extrabold text-white mt-2">79.000 đ <span class="text-xs font-normal text-slate-400">/ 30 ngày</span></div>
+            <ul class="text-xs text-slate-300 space-y-2.5 mt-4">
+              <li class="flex items-center gap-2">✓ Chơi cùng bạn bè hoặc dùng 1 PC + 1 Laptop</li>
+              <li class="flex items-center gap-2">✓ Băng thông không giới hạn</li>
+              <li class="flex items-center gap-2">✓ Ưu tiên tuyến đường ít người dùng</li>
+            </ul>
+          </div>
+          <button onclick="createPayment('dual_79k')" class="mt-6 w-full py-3 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition">
+            Gia hạn gói này (79.000 đ)
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Payment Modal -->
+  <div id="qrModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-7 max-w-sm w-full text-center space-y-4">
+      <h3 class="text-base font-bold text-white">Quét mã VietQR chuyển khoản</h3>
+      <p class="text-xs text-slate-400">Hệ thống sẽ tự động kích hoạt gói cước ngay khi nhận được thanh toán</p>
+      
+      <div class="bg-white p-3 rounded-2xl inline-block shadow-inner">
+        <img id="qrImage" src="" alt="VietQR" class="w-60 h-60 object-contain mx-auto" />
+      </div>
+
+      <div class="text-xs space-y-1 bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono">
+        <div>Số tiền: <strong id="qrAmount" class="text-emerald-400">...</strong></div>
+        <div>Nội dung: <strong id="qrCode" class="text-yellow-400">...</strong></div>
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="closeModal()" class="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">Đóng</button>
+        <button onclick="checkPaid()" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white">Đã chuyển khoản</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const userStr = localStorage.getItem('gsp_user');
+    const token = localStorage.getItem('gsp_token');
+
+    if (!userStr || !token) {
+      window.location.href = '/auth.html';
+    }
+
+    const user = JSON.parse(userStr || '{}');
+    document.getElementById('userEmail').innerText = user.email || '';
+
+    let currentOrderCode = '';
+
+    async function loadDashboard() {
+      try {
+        const res = await fetch('/api/user/dashboard?userId=' + user.id, {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        // Sub info
+        const sub = data.subscription;
+        document.getElementById('planName').innerText = sub.plan_id === 'trial' ? 'Dùng thử 3 ngày' : (sub.plan_id === 'dual_79k' ? 'Gói Dual (2 PC)' : 'Gói Tiêu Chuẩn');
+        document.getElementById('planBadge').innerText = sub.isActive ? (sub.daysLeft + ' ngày còn lại') : 'Đã hết hạn';
+        document.getElementById('planBadge').className = sub.isActive 
+          ? 'text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold'
+          : 'text-xs px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 font-semibold';
+        
+        const expDate = new Date(sub.expires_at * 1000);
+        document.getElementById('planExpiry').innerText = expDate.toLocaleDateString('vi-VN');
+        document.getElementById('deviceLimit').innerText = sub.max_devices + ' PC';
+
+        // Devices
+        const devContainer = document.getElementById('deviceList');
+        if (data.devices.length === 0) {
+          devContainer.innerHTML = '<div class="text-center py-6 text-xs text-slate-500">Chưa có máy tính nào liên kết. Mở GamePingBooster trên Windows và đăng nhập để kích hoạt máy này.</div>';
+        } else {
+          devContainer.innerHTML = data.devices.map(d => `
+            <div class="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-lg">💻</div>
+                <div>
+                  <div class="text-sm font-bold text-white">${d.device_label || 'Windows PC'}</div>
+                  <div class="text-xs text-slate-500 font-mono">Đăng ký: ${new Date(d.registered_at * 1000).toLocaleDateString('vi-VN')}</div>
+                </div>
+              </div>
+              <button onclick="unbindDevice(${d.id})" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-950/40 hover:bg-red-900/50 border border-red-500/30 text-red-300 transition">
+                Hủy liên kết
+              </button>
+            </div>
+          `).join('');
+        }
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function unbindDevice(deviceId) {
+      if (!confirm('Bạn có chắc muốn hủy liên kết máy tính này để nhường slot cho máy khác?')) return;
+      try {
+        const res = await fetch('/api/user/devices/unbind', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ userId: user.id, deviceId })
+        });
+        if (res.ok) {
+          loadDashboard();
+        }
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    async function createPayment(planId) {
+      try {
+        const res = await fetch('/api/billing/create-qr', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ userId: user.id, planId })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        currentOrderCode = data.orderCode;
+        document.getElementById('qrImage').src = data.qrUrl;
+        document.getElementById('qrAmount').innerText = data.amount.toLocaleString('vi-VN') + ' VNĐ';
+        document.getElementById('qrCode').innerText = data.orderCode;
+        document.getElementById('qrModal').classList.remove('hidden');
+
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('qrModal').classList.add('hidden');
+    }
+
+    async function checkPaid() {
+      try {
+        const res = await fetch('/api/billing/confirm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderCode: currentOrderCode })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Thanh toán thành công! Gói cước của bạn đã được gia hạn thêm 30 ngày.');
+          closeModal();
+          loadDashboard();
+        } else {
+          alert('Hệ thống đang kiểm tra giao dịch, vui lòng thử lại sau 1 phút.');
+        }
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('gsp_user');
+      localStorage.removeItem('gsp_token');
+      window.location.href = '/auth.html';
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>

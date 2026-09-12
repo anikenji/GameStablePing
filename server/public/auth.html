@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập & Đăng ký - GSP GameStablePing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #090d16; }
+    .bg-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="bg-[#090d16] bg-grid min-h-screen text-slate-100 flex items-center justify-center p-4 selection:bg-emerald-500 selection:text-white">
+
+  <div class="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl backdrop-blur-xl relative">
+    
+    <!-- Brand Header -->
+    <div class="text-center mb-8">
+      <a href="/" class="inline-flex items-center gap-2 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-emerald-500/20">
+          ⚡
+        </div>
+        <span class="font-extrabold text-2xl tracking-tight text-white">GSP</span>
+      </a>
+      <h1 id="title" class="text-xl font-bold text-white">Đăng nhập tài khoản</h1>
+      <p id="subtitle" class="text-slate-400 text-xs mt-1">Đăng nhập để liên kết thiết bị và tối ưu ping trận đấu</p>
+    </div>
+
+    <!-- Alert Box -->
+    <div id="alertBox" class="hidden mb-6 p-3 rounded-xl text-xs font-medium border"></div>
+
+    <!-- App Authorization Notice if redirected from desktop -->
+    <div id="appNotice" class="hidden mb-6 p-3.5 rounded-xl bg-blue-950/40 border border-blue-500/30 text-blue-300 text-xs flex items-center gap-2.5">
+      <span class="text-base">💻</span>
+      <span>Đang kết nối từ <strong>GameStablePing Desktop App</strong>. Đăng nhập để tự động kích hoạt thiết bị.</span>
+    </div>
+
+    <!-- Form -->
+    <form id="authForm" class="space-y-4" onsubmit="handleSubmit(event)">
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Email</label>
+        <input type="email" id="email" required placeholder="name@example.com"
+               class="w-full bg-slate-950/80 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl px-4 py-3 text-sm text-slate-100 outline-none transition" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Mật khẩu</label>
+        <input type="password" id="password" required placeholder="••••••••" minlength="6"
+               class="w-full bg-slate-950/80 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl px-4 py-3 text-sm text-slate-100 outline-none transition" />
+      </div>
+
+      <button type="submit" id="submitBtn"
+              class="w-full py-3.5 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition duration-200 mt-2">
+        Đăng nhập
+      </button>
+    </form>
+
+    <!-- Toggle Login / Register -->
+    <div class="text-center mt-6 pt-6 border-t border-slate-800 text-xs text-slate-400">
+      <span id="toggleText">Chưa có tài khoản?</span>
+      <button type="button" onclick="toggleMode()" id="toggleBtn" class="text-emerald-400 hover:text-emerald-300 font-semibold ml-1.5 underline transition">
+        Đăng ký nhận 3 ngày miễn phí
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectUri = urlParams.get('redirect_uri');
+    const state = urlParams.get('state');
+
+    let isRegister = false;
+
+    if (redirectUri) {
+      document.getElementById('appNotice').classList.remove('hidden');
+    }
+
+    function toggleMode() {
+      isRegister = !isRegister;
+      const title = document.getElementById('title');
+      const subtitle = document.getElementById('subtitle');
+      const submitBtn = document.getElementById('submitBtn');
+      const toggleText = document.getElementById('toggleText');
+      const toggleBtn = document.getElementById('toggleBtn');
+      const alertBox = document.getElementById('alertBox');
+      alertBox.classList.add('hidden');
+
+      if (isRegister) {
+        title.innerText = 'Đăng ký tài khoản GSP';
+        subtitle.innerText = 'Nhận ngay 3 ngày dùng thử VIP hoàn toàn miễn phí';
+        submitBtn.innerText = 'Đăng ký nhận 3 ngày VIP';
+        submitBtn.className = submitBtn.className.replace('bg-blue-600 hover:bg-blue-500', 'bg-emerald-600 hover:bg-emerald-500');
+        toggleText.innerText = 'Đã có tài khoản?';
+        toggleBtn.innerText = 'Đăng nhập ngay';
+      } else {
+        title.innerText = 'Đăng nhập tài khoản';
+        subtitle.innerText = 'Đăng nhập để liên kết thiết bị và tối ưu ping trận đấu';
+        submitBtn.innerText = 'Đăng nhập';
+        submitBtn.className = submitBtn.className.replace('bg-emerald-600 hover:bg-emerald-500', 'bg-blue-600 hover:bg-blue-500');
+        toggleText.innerText = 'Chưa có tài khoản?';
+        toggleBtn.innerText = 'Đăng ký nhận 3 ngày miễn phí';
+      }
+    }
+
+    function showAlert(msg, isSuccess = false) {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.innerText = msg;
+      alertBox.className = isSuccess 
+        ? 'mb-6 p-3 rounded-xl text-xs font-medium border bg-emerald-950/50 border-emerald-500/40 text-emerald-300'
+        : 'mb-6 p-3 rounded-xl text-xs font-medium border bg-red-950/50 border-red-500/40 text-red-300';
+      alertBox.classList.remove('hidden');
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const submitBtn = document.getElementById('submitBtn');
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Đang xử lý...';
+
+      try {
+        const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, redirectUri })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Có lỗi xảy ra');
+        }
+
+        // Save session
+        localStorage.setItem('gsp_user', JSON.stringify(data.user));
+        localStorage.setItem('gsp_token', data.token);
+
+        showAlert(isRegister ? 'Đăng ký thành công! Đang chuyển hướng...' : 'Đăng nhập thành công! Đang chuyển hướng...', true);
+
+        setTimeout(() => {
+          if (data.redirect) {
+            window.location.href = data.redirect;
+          } else if (redirectUri && data.authCode) {
+            const cb = new URL(redirectUri);
+            cb.searchParams.set('code', data.authCode);
+            if (state) cb.searchParams.set('state', state);
+            window.location.href = cb.toString();
+          } else {
+            window.location.href = '/dashboard';
+          }
+        }, 800);
+
+      } catch (err) {
+        showAlert(err.message, false);
+        submitBtn.disabled = false;
+        submitBtn.innerText = isRegister ? 'Đăng ký nhận 3 ngày VIP' : 'Đăng nhập';
+      }
+    }
+  </script>
+</body>
+</html>
