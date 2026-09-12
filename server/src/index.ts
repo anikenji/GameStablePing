@@ -160,18 +160,27 @@ const server = http.createServer(async (req, res) => {
     // Direct Download Endpoint for Windows App (.ZIP)
     // -------------------------------------------------------------
     if (pathname === "/download" && (method === "GET" || method === "HEAD")) {
-      const zipPath = path.resolve("dist/GamePingBooster-v0.2.2-win-x64.zip");
+      const zipPath = path.resolve("dist/GSP-v0.3.0-win-x64.zip");
       if (fs.existsSync(zipPath)) {
         const stat = fs.statSync(zipPath);
         res.writeHead(200, {
           "Content-Type": "application/zip",
-          "Content-Disposition": 'attachment; filename="GameStablePing-v0.2.2-win-x64.zip"',
+          "Content-Disposition": 'attachment; filename="GSP-v0.3.0-win-x64.zip"',
           "Content-Length": stat.size
         });
         return fs.createReadStream(zipPath).pipe(res);
-      } else {
-        return sendJson(404, { error: "Installer package not found" });
       }
+      const oldZip = path.resolve("dist/GamePingBooster-v0.2.2-win-x64.zip");
+      if (fs.existsSync(oldZip)) {
+        const stat = fs.statSync(oldZip);
+        res.writeHead(200, {
+          "Content-Type": "application/zip",
+          "Content-Disposition": 'attachment; filename="GSP-v0.3.0-win-x64.zip"',
+          "Content-Length": stat.size
+        });
+        return fs.createReadStream(oldZip).pipe(res);
+      }
+      return sendJson(404, { error: "Installer package not found" });
     }
 
     // -------------------------------------------------------------

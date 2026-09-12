@@ -30,9 +30,11 @@ public partial class App : Application
     {
         try
         {
-            if (Process.GetProcessesByName("gpb-service").Length > 0) return;
+            if (Process.GetProcessesByName("gsp-service").Length > 0 || Process.GetProcessesByName("gpb-service").Length > 0) return;
 
-            var servicePath = Path.Combine(AppContext.BaseDirectory, "gpb-service.exe");
+            var servicePath = Path.Combine(AppContext.BaseDirectory, "gsp-service.exe");
+            if (!File.Exists(servicePath)) servicePath = Path.Combine(AppContext.BaseDirectory, "gpb-service.exe");
+
             if (File.Exists(servicePath))
             {
                 var psi = new ProcessStartInfo

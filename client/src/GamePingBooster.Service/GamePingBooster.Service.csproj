@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
-    <AssemblyName>gpb-service</AssemblyName>
+    <AssemblyName>gsp-service</AssemblyName>
     <RootNamespace>GamePingBooster.Service</RootNamespace>
 
     <!-- Native AOT: the exe is real machine code, so users do not need the .NET Runtime. -->
