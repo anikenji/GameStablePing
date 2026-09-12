@@ -159,6 +159,20 @@ const server = http.createServer(async (req, res) => {
     // -------------------------------------------------------------
     // Direct Download Endpoint for Windows App (.EXE & .ZIP)
     // -------------------------------------------------------------
+    if ((pathname === "/gsp-v0.3.0.zip" || pathname === "/gsp-zip" || pathname === "/dist/zip") && (method === "GET" || method === "HEAD")) {
+      const zipPath = path.resolve("dist/GSP-v0.3.0-win-x64.zip");
+      if (fs.existsSync(zipPath)) {
+        const stat = fs.statSync(zipPath);
+        res.writeHead(200, {
+          "Content-Type": "application/zip",
+          "Content-Disposition": 'attachment; filename="GSP-v0.3.0-win-x64.zip"',
+          "Content-Length": stat.size,
+          "Cache-Control": "no-cache, no-store, must-revalidate"
+        });
+        return fs.createReadStream(zipPath).pipe(res);
+      }
+    }
+
     if ((pathname === "/gsp-setup.exe" || pathname === "/gsp-setup-v0.3.0.exe" || pathname === "/setup" || pathname === "/download/setup") && (method === "GET" || method === "HEAD")) {
       const exePath = path.resolve("dist/gsp-setup.exe");
       if (fs.existsSync(exePath)) {
@@ -175,35 +189,13 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === "/download" && (method === "GET" || method === "HEAD")) {
       const format = parsedUrl.searchParams.get("format");
-      
-      // Default to gsp-setup.exe for ordinary users
-      if (format !== "zip") {
-        const exePath = path.resolve("dist/gsp-setup.exe");
-        if (fs.existsSync(exePath)) {
-          const stat = fs.statSync(exePath);
-          res.writeHead(200, {
-            "Content-Type": "application/octet-stream",
-            "Content-Disposition": 'attachment; filename="gsp-setup-v0.3.0.exe"',
-            "Content-Length": stat.size,
-            "Cache-Control": "no-cache, no-store, must-revalidate"
-          });
-          return fs.createReadStream(exePath).pipe(res);
-        }
-      }
+      const targetUrl = format === "zip"
+        ? "https://github.com/anikenji/GameStablePing/releases/download/v0.3.0/GSP-v0.3.0-win-x64.zip"
+        : "https://github.com/anikenji/GameStablePing/releases/download/v0.3.0/gsp-setup.exe";
 
-      const zipPath = path.resolve("dist/GSP-v0.3.0-win-x64.zip");
-      if (fs.existsSync(zipPath)) {
-        const stat = fs.statSync(zipPath);
-        res.writeHead(200, {
-          "Content-Type": "application/zip",
-          "Content-Disposition": 'attachment; filename="GSP-v0.3.0-win-x64.zip"',
-          "Content-Length": stat.size,
-          "Cache-Control": "no-cache, no-store, must-revalidate"
-        });
-        return fs.createReadStream(zipPath).pipe(res);
-      }
-
-      return sendJson(404, { error: "Installer package not found" });
+      // If requested direct redirect to GitHub releases
+      res.writeHead(302, { Location: targetUrl });
+      return res.end();
     }
 
     // -------------------------------------------------------------
