@@ -157,9 +157,38 @@ const server = http.createServer(async (req, res) => {
     }
 
     // -------------------------------------------------------------
-    // Direct Download Endpoint for Windows App (.ZIP)
+    // Direct Download Endpoint for Windows App (.EXE & .ZIP)
     // -------------------------------------------------------------
+    if ((pathname === "/gsp-setup.exe" || pathname === "/setup" || pathname === "/download/setup") && (method === "GET" || method === "HEAD")) {
+      const exePath = path.resolve("dist/gsp-setup.exe");
+      if (fs.existsSync(exePath)) {
+        const stat = fs.statSync(exePath);
+        res.writeHead(200, {
+          "Content-Type": "application/octet-stream",
+          "Content-Disposition": 'attachment; filename="gsp-setup.exe"',
+          "Content-Length": stat.size
+        });
+        return fs.createReadStream(exePath).pipe(res);
+      }
+    }
+
     if (pathname === "/download" && (method === "GET" || method === "HEAD")) {
+      const format = parsedUrl.searchParams.get("format");
+      
+      // Default to gsp-setup.exe for ordinary users (fast 28MB install wizard)
+      if (format !== "zip") {
+        const exePath = path.resolve("dist/gsp-setup.exe");
+        if (fs.existsSync(exePath)) {
+          const stat = fs.statSync(exePath);
+          res.writeHead(200, {
+            "Content-Type": "application/octet-stream",
+            "Content-Disposition": 'attachment; filename="gsp-setup.exe"',
+            "Content-Length": stat.size
+          });
+          return fs.createReadStream(exePath).pipe(res);
+        }
+      }
+
       const zipPath = path.resolve("dist/GSP-v0.3.0-win-x64.zip");
       if (fs.existsSync(zipPath)) {
         const stat = fs.statSync(zipPath);
@@ -170,16 +199,7 @@ const server = http.createServer(async (req, res) => {
         });
         return fs.createReadStream(zipPath).pipe(res);
       }
-      const oldZip = path.resolve("dist/GamePingBooster-v0.2.2-win-x64.zip");
-      if (fs.existsSync(oldZip)) {
-        const stat = fs.statSync(oldZip);
-        res.writeHead(200, {
-          "Content-Type": "application/zip",
-          "Content-Disposition": 'attachment; filename="GSP-v0.3.0-win-x64.zip"',
-          "Content-Length": stat.size
-        });
-        return fs.createReadStream(oldZip).pipe(res);
-      }
+
       return sendJson(404, { error: "Installer package not found" });
     }
 
