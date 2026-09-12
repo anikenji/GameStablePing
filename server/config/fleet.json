@@ -1,12 +1,13 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-12T17:42:55.655Z",
+  "updatedAt": "2026-09-12T17:51:06.737Z",
   "relays": [
     {
       "id": "jp-1",
       "name": "Tokyo Relay 1 (Japan)",
       "location": "Tokyo, Japan",
       "endpoint": "158.101.137.208:51820",
+      "publicKey": "04ab45407f5cb9f3633cc2b233fa6d6cf57d1d54b4a252b8c6404fde546a5044c11d028ab49c650c9055e0b1be6cc80b625dade9ffdb94fccf1e0072ec39119a71",
       "status": "online",
       "minTier": 0,
       "weight": 100
