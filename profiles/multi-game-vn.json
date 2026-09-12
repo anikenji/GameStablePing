@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "generatedUtc": "2026-09-12T14:10:53.875Z",
+  "note": "Dynamic multi-game profile generated for GamePingBooster with Singapore, Tokyo, Hong Kong fleet.",
+  "relays": [
+    {
+      "id": "sg-1",
+      "name": "Singapore Relay 1 (Primary)",
+      "location": "Singapore",
+      "endpoint": "sg1.relay.gamepingbooster.com:51820",
+      "minTier": 0
+    },
+    {
+      "id": "sg-2",
+      "name": "Singapore Relay 2 (Backup)",
+      "location": "Singapore",
+      "endpoint": "sg2.relay.gamepingbooster.com:51820",
+      "minTier": 0
+    },
+    {
+      "id": "jp-1",
+      "name": "Tokyo Relay 1",
+      "location": "Tokyo, Japan",
+      "endpoint": "jp1.relay.gamepingbooster.com:51820",
+      "minTier": 0
+    },
+    {
+      "id": "hk-1",
+      "name": "Hong Kong Relay 1",
+      "location": "Hong Kong",
+      "endpoint": "hk1.relay.gamepingbooster.com:51820",
+      "minTier": 0
+    }
+  ],
+  "games": [
+    {
+      "id": "pubg",
+      "name": "PUBG: BATTLEGROUNDS",
+      "processNames": [
+        "TslGame.exe",
+        "TslGame_BE.exe",
+        "PUBG.exe"
+      ],
+      "lobbyAddresses": [
+        "13.250.0.0/16"
+      ],
+      "regions": [
+        {
+          "id": "asia-sg",
+          "name": "Southeast Asia (Singapore)",
+          "source": "azure:southeastasia",
+          "note": "AWS & Azure Singapore datacentres",
+          "landmarks": [
+            "20.24.48.1",
+            "52.139.208.1"
+          ],
+          "cidrs": [
+            "20.24.48.0/20",
+            "52.139.208.0/20",
+            "13.250.0.0/15",
+            "18.136.0.0/15"
+          ]
+        },
+        {
+          "id": "asia-jp",
+          "name": "East Asia (Tokyo, Japan)",
+          "source": "azure:japaneast",
+          "note": "AWS & Azure Tokyo datacentres",
+          "landmarks": [
+            "20.43.64.1"
+          ],
+          "cidrs": [
+            "20.43.64.0/19",
+            "52.185.128.0/17",
+            "13.112.0.0/14"
+          ]
+        },
+        {
+          "id": "asia-kr",
+          "name": "East Asia (Seoul, Korea)",
+          "source": "azure:koreacentral",
+          "note": "AWS & Azure Seoul datacentres",
+          "landmarks": [
+            "20.41.64.1"
+          ],
+          "cidrs": [
+            "20.41.64.0/19",
+            "52.231.0.0/16"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cs2",
+      "name": "Counter-Strike 2",
+      "processNames": [
+        "cs2.exe"
+      ],
+      "lobbyAddresses": [],
+      "regions": [
+        {
+          "id": "cs2-sg",
+          "name": "Singapore (Valve SDR)",
+          "source": "valve:sdr:sgp",
+          "note": "Valve Steam Datagram Relay Singapore PoPs",
+          "landmarks": [
+            "155.133.253.1",
+            "103.10.124.1"
+          ],
+          "cidrs": [
+            "155.133.253.0/24",
+            "103.10.124.0/24",
+            "155.133.252.0/24"
+          ]
+        },
+        {
+          "id": "cs2-hk",
+          "name": "Hong Kong (Valve SDR)",
+          "source": "valve:sdr:hkg",
+          "note": "Valve Steam Datagram Relay Hong Kong PoPs",
+          "landmarks": [
+            "153.254.86.1"
+          ],
+          "cidrs": [
+            "153.254.86.0/24",
+            "153.254.87.0/24"
+          ]
+        },
+        {
+          "id": "cs2-tyo",
+          "name": "Tokyo (Valve SDR)",
+          "source": "valve:sdr:tyo",
+          "note": "Valve Steam Datagram Relay Tokyo PoPs",
+          "landmarks": [
+            "155.133.239.1"
+          ],
+          "cidrs": [
+            "155.133.239.0/24",
+            "155.133.245.0/24"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "valorant",
+      "name": "Valorant",
+      "processNames": [
+        "VALORANT.exe",
+        "VALORANT-Win64-Shipping.exe"
+      ],
+      "lobbyAddresses": [],
+      "regions": [
+        {
+          "id": "val-sg",
+          "name": "Southeast Asia (Singapore Riot Direct)",
+          "source": "riot:singapore",
+          "note": "Riot Direct Singapore Game Servers",
+          "landmarks": [
+            "151.106.248.1"
+          ],
+          "cidrs": [
+            "151.106.248.0/22",
+            "162.249.72.0/22"
+          ]
+        },
+        {
+          "id": "val-tyo",
+          "name": "Japan (Tokyo Riot Direct)",
+          "source": "riot:tokyo",
+          "note": "Riot Direct Tokyo Game Servers",
+          "landmarks": [
+            "151.106.252.1"
+          ],
+          "cidrs": [
+            "151.106.252.0/22"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dota2",
+      "name": "Dota 2",
+      "processNames": [
+        "dota2.exe"
+      ],
+      "lobbyAddresses": [],
+      "regions": [
+        {
+          "id": "dota2-sg",
+          "name": "Southeast Asia (Singapore Valve SDR)",
+          "source": "valve:sdr:sgp",
+          "note": "Valve Steam Datagram Relay Singapore",
+          "landmarks": [
+            "155.133.253.1"
+          ],
+          "cidrs": [
+            "155.133.253.0/24",
+            "103.10.124.0/24"
+          ]
+        },
+        {
+          "id": "dota2-jp",
+          "name": "Japan (Tokyo Valve SDR)",
+          "source": "valve:sdr:tyo",
+          "note": "Valve Steam Datagram Relay Tokyo",
+          "landmarks": [
+            "155.133.239.1"
+          ],
+          "cidrs": [
+            "155.133.239.0/24"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apex",
+      "name": "Apex Legends",
+      "processNames": [
+        "r5apex.exe",
+        "r5apex_dx12.exe"
+      ],
+      "lobbyAddresses": [],
+      "regions": [
+        {
+          "id": "apex-sg",
+          "name": "Singapore (AWS / Multiplay)",
+          "source": "ea:singapore",
+          "note": "Apex Legends Singapore Match Servers",
+          "landmarks": [
+            "13.250.0.1"
+          ],
+          "cidrs": [
+            "13.250.0.0/16",
+            "18.136.0.0/16"
+          ]
+        },
+        {
+          "id": "apex-jp",
+          "name": "Tokyo (AWS / Multiplay)",
+          "source": "ea:tokyo",
+          "note": "Apex Legends Tokyo Match Servers",
+          "landmarks": [
+            "13.112.0.1"
+          ],
+          "cidrs": [
+            "13.112.0.0/16",
+            "52.192.0.0/16"
+          ]
+        }
+      ]
+    }
+  ]
+}

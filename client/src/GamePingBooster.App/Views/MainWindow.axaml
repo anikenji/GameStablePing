@@ -1,4 +1,4 @@
-﻿<views:SurfaceWindow xmlns="https://github.com/avaloniaui"
+<views:SurfaceWindow xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:GamePingBooster.App.ViewModels"
         xmlns:views="using:GamePingBooster.App.Views"
@@ -156,6 +156,25 @@
 
     <!-- Primary action -->
     <Grid Grid.Row="3" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+
+      <!-- Game & Region Selectors -->
+      <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*" Margin="0,0,0,12"
+            IsVisible="{Binding !NeedsSetup}">
+        <StackPanel Grid.Column="0" Margin="0,0,6,0">
+          <TextBlock Classes="label" Text="Game" FontSize="11" Margin="2,0,0,4" />
+          <ComboBox ItemsSource="{Binding Games}"
+                    SelectedItem="{Binding SelectedGame}"
+                    HorizontalAlignment="Stretch"
+                    Background="#242424" BorderThickness="0" CornerRadius="8" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="6,0,0,0">
+          <TextBlock Classes="label" Text="Server Region" FontSize="11" Margin="2,0,0,4" />
+          <ComboBox ItemsSource="{Binding Regions}"
+                    SelectedItem="{Binding SelectedRegion}"
+                    HorizontalAlignment="Stretch"
+                    Background="#242424" BorderThickness="0" CornerRadius="8" />
+        </StackPanel>
+      </Grid>
 
       <!-- First run: there is no relay yet, so say so instead of offering a button that
            could only fail. -->

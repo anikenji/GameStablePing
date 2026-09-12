@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
@@ -75,6 +75,19 @@ public partial class App : Application
                     ? DateTimeOffset.FromUnixTimeSeconds(unix)
                     : (DateTimeOffset?)null;
                 _ = _profileSync.SyncAsync(status.LicenceUrl, status.DevicePublicKey, "pubg", false, written);
+
+                // Auto-Connect on launch when configured
+                if (status.Configured && status.State == Core.Ipc.TunnelState.Disconnected)
+                {
+                    Dispatcher.UIThread.Post(async () =>
+                    {
+                        await Task.Delay(500);
+                        if (vm.CanPressAction && vm.State == Core.Ipc.TunnelState.Disconnected)
+                        {
+                            await vm.ToggleAsync(_profileSync);
+                        }
+                    });
+                }
             }
 
             // The catch-all: closing the main window is handled in MainWindow.OnClosing,

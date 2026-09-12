@@ -59,6 +59,11 @@ docs/COMMERCIAL.md
 
 # Installer output
 installer/dist/
+dist/
+.codegraph/
+dotnet-install.sh
+server/keys/*.priv
+server/data/
 
 # Cong cu va tai lieu van hanh, khong public
 licence-gen

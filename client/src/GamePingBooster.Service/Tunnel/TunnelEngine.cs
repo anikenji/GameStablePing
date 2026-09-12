@@ -1,4 +1,4 @@
-﻿using System.Buffers.Binary;
+using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.Json;
@@ -32,6 +32,7 @@ internal sealed class TunnelEngine : IAsyncDisposable
     private TunnelClient? _tunnel;
     private RouteManager? _routes;
     private GameProcessWatcher? _watcher;
+    private DynamicGameDetector? _detector;
     private CancellationTokenSource? _cts;
     private Task? _supervisor;
     private Task? _gamePingProbe;
@@ -389,6 +390,14 @@ internal sealed class TunnelEngine : IAsyncDisposable
             _watcher = new GameProcessWatcher(_game.ProcessNames);
             _watcher.GameStateChanged += OnGameStateChanged;
             _watcher.Start();
+
+            // Also start dynamic socket detector to discover /32 match server addresses
+            _detector = new DynamicGameDetector(
+                _game.ProcessNames,
+                onServerDetected: OnDynamicServerDetected,
+                onServerEnded: OnDynamicServerEnded,
+                log: _log);
+            _detector.Start();
 
             if (_config.RouteWithoutGame)
             {
@@ -1332,6 +1341,26 @@ internal sealed class TunnelEngine : IAsyncDisposable
         return order;
     }
 
+    private void OnDynamicServerDetected(IPAddress serverIp)
+    {
+        if (_adapter is null || _routes is null || _tunnel is null) return;
+        try
+        {
+            var cidr = $"{serverIp}/32";
+            _routes.InstallGameRoutes(_adapter.InterfaceIndex, [cidr]);
+            _log($"[Detector] Dynamically installed /32 route for game server: {cidr}");
+        }
+        catch (Exception ex)
+        {
+            _log($"[Detector] Failed to install dynamic route for {serverIp}: {ex.Message}");
+        }
+    }
+
+    private void OnDynamicServerEnded(IPAddress serverIp)
+    {
+        _log($"[Detector] Game server session ended: {serverIp}");
+    }
+
     private void OnGameStateChanged(bool running, string? processName)
     {
         try
@@ -1507,6 +1536,12 @@ internal sealed class TunnelEngine : IAsyncDisposable
         // different distance it would be reporting the wrong one.
         _path = null;
         ForgetDirectPing();
+
+        if (_detector is not null)
+        {
+            _detector.Dispose();
+            _detector = null;
+        }
 
         if (_watcher is not null)
         {

@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "updatedAt": "2026-09-12T14:18:56.642Z",
+  "relays": [
+    {
+      "id": "sg-1",
+      "name": "Singapore Relay 1 (Primary)",
+      "location": "Singapore",
+      "endpoint": "sg1.relay.gamepingbooster.com:51820",
+      "status": "online",
+      "minTier": 0,
+      "weight": 100
+    },
+    {
+      "id": "sg-2",
+      "name": "Singapore Relay 2 (Backup)",
+      "location": "Singapore",
+      "endpoint": "sg2.relay.gamepingbooster.com:51820",
+      "status": "online",
+      "minTier": 0,
+      "weight": 80
+    },
+    {
+      "id": "jp-1",
+      "name": "Tokyo Relay 1",
+      "location": "Tokyo, Japan",
+      "endpoint": "jp1.relay.gamepingbooster.com:51820",
+      "status": "online",
+      "minTier": 0,
+      "weight": 100
+    },
+    {
+      "id": "hk-1",
+      "name": "Hong Kong Relay 1",
+      "location": "Hong Kong",
+      "endpoint": "hk1.relay.gamepingbooster.com:51820",
+      "status": "online",
+      "minTier": 0,
+      "weight": 90
+    },
+    {
+      "id": "tokyo-test-2",
+      "name": "Tokyo Ultra Fast Relay",
+      "location": "Tokyo, Japan",
+      "endpoint": "jp2.relay.gamepingbooster.com:51820",
+      "status": "online",
+      "minTier": 0,
+      "registeredAt": "2026-09-12T14:18:56.642Z"
+    }
+  ]
+}

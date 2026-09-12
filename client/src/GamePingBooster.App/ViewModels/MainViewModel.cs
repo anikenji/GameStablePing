@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Avalonia.Media;
 using Avalonia.Threading;
@@ -21,6 +21,54 @@ public sealed class MainViewModel : INotifyPropertyChanged
         _pipe = pipe;
         _pipe.StatusReceived += OnStatus;
         _pipe.Disconnected += OnDisconnected;
+    }
+
+    // ------------------------------------------------------------ multi-game & region
+    public sealed class GameOption
+    {
+        public string Id { get; set; } = "";
+        public string Name { get; set; } = "";
+        public GameOption(string id, string name) { Id = id; Name = name; }
+        public override string ToString() => Name;
+    }
+
+    public sealed class RegionOption
+    {
+        public string? RelayId { get; set; }
+        public string Name { get; set; } = "";
+        public RegionOption(string? relayId, string name) { RelayId = relayId; Name = name; }
+        public override string ToString() => Name;
+    }
+
+    public List<GameOption> Games { get; } =
+    [
+        new("pubg", "PUBG: BATTLEGROUNDS"),
+        new("cs2", "Counter-Strike 2"),
+        new("valorant", "Valorant"),
+        new("dota2", "Dota 2"),
+        new("apex", "Apex Legends")
+    ];
+
+    private GameOption? _selectedGame;
+    public GameOption SelectedGame
+    {
+        get => _selectedGame ??= Games[0];
+        set => Set(ref _selectedGame, value);
+    }
+
+    public List<RegionOption> Regions { get; } =
+    [
+        new(null, "Auto (Best Ping)"),
+        new("sg-1", "Singapore (SG)"),
+        new("jp-1", "Tokyo (JP)"),
+        new("hk-1", "Hong Kong (HK)")
+    ];
+
+    private RegionOption? _selectedRegion;
+    public RegionOption SelectedRegion
+    {
+        get => _selectedRegion ??= Regions[0];
+        set => Set(ref _selectedRegion, value);
     }
 
     // ------------------------------------------------------------ licence
@@ -507,12 +555,12 @@ public sealed class MainViewModel : INotifyPropertyChanged
                     // next line raises PropertyChanged - off the UI thread that breaks Avalonia's
                     // bindings in ways that surface later and somewhere else.
                     await profileSync
-                        .SyncAsync(LicenceUrl, DevicePublicKey, "pubg", force: true)
+                        .SyncAsync(LicenceUrl, DevicePublicKey, SelectedGame.Id, force: true)
                         .ConfigureAwait(true);
                 }
 
                 Detail = "Sending the request to the background service...";
-                await _pipe.ConnectTunnelAsync().ConfigureAwait(true);
+                await _pipe.ConnectTunnelAsync(SelectedRegion.RelayId, SelectedGame.Id).ConfigureAwait(true);
             }
         }
         catch (Exception ex)

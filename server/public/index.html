@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GSP - GameStablePing | Ổn Định Ping & Tối Ưu Độ Trễ Game Hàng Đầu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #090d16; color: #f3f4f6; }
+    .bg-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    }
+    .glow-green { box-shadow: 0 0 35px -5px rgba(34, 197, 94, 0.25); }
+    .glow-blue { box-shadow: 0 0 35px -5px rgba(59, 130, 246, 0.25); }
+  </style>
+</head>
+<body class="bg-[#090d16] bg-grid min-h-screen text-slate-100 selection:bg-emerald-500 selection:text-white">
+
+  <!-- Navigation -->
+  <header class="border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-50 bg-[#090d16]/80">
+    <div class="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between py-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-xl shadow-lg shadow-emerald-500/20">
+          ⚡
+        </div>
+        <div>
+          <span class="font-extrabold text-lg tracking-tight text-white">GSP</span>
+          <span class="text-xs font-semibold px-2 py-0.5 ml-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">GameStablePing</span>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#features" class="hover:text-white transition">Tính năng</a>
+        <a href="#how-it-works" class="hover:text-white transition">Cách hoạt động</a>
+        <a href="#supported-games" class="hover:text-white transition">Game hỗ trợ</a>
+        <a href="#infra" class="hover:text-white transition">Hạ tầng VPS</a>
+        <a href="#download" class="hover:text-white transition">Tải ứng dụng</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="/download" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white transition shadow-lg shadow-blue-600/25 flex items-center gap-2">
+          <span>Tải bản Windows</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-7xl mx-auto px-6 pt-12 pb-24">
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/80 text-xs text-slate-300 mb-8">
+      <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="font-semibold text-emerald-400">PUBG & CS2</span> đã ổn định. Valorant & Dota 2 đang đo đạc tối ưu.
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-12 items-center">
+      <!-- Left Hero Text -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="text-xs font-bold tracking-wider text-blue-400 uppercase">
+          Dành riêng cho game thủ tại Việt Nam
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
+          Mạng nhà bạn không yếu.<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Cá mập là thủ phạm chính mà thôi.</span>
+        </h1>
+        <p class="text-slate-400 text-lg leading-relaxed max-w-xl">
+          <strong>GSP (GameStablePing)</strong> dẫn hướng riêng traffic của game qua tuyến cáp quang đã được đo đạc trước, nơi không có bọn cá mập cắn cáp. Tuyệt đối không can thiệp bộ nhớ game, không DLL hook, không lo bị ban nick.
+        </p>
+
+        <div class="flex flex-wrap gap-4 pt-2">
+          <a href="/download" class="px-7 py-3.5 rounded-xl font-bold text-base bg-blue-600 hover:bg-blue-500 text-white shadow-xl shadow-blue-600/30 transition flex items-center gap-2">
+            <span>Dùng thử miễn phí ngay</span>
+            <span>→</span>
+          </a>
+          <a href="#how-it-works" class="px-6 py-3.5 rounded-xl font-semibold text-base bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+            Cách hoạt động
+          </a>
+        </div>
+
+        <div class="text-xs text-slate-500 flex items-center gap-6 pt-2">
+          <span>✓ Cài đặt trong 2 phút</span>
+          <span>✓ Không ưng gỡ sạch sẽ</span>
+          <span>✓ Chạy Native AOT sub-ms</span>
+        </div>
+      </div>
+
+      <!-- Right Interactive Comparison Card -->
+      <div class="lg:col-span-5">
+        <div class="rounded-3xl border border-slate-800 bg-slate-900/90 p-7 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+          <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <span class="font-bold text-sm tracking-wide text-slate-200">Ping trong trận</span>
+            </div>
+            <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
+              5 điểm trung chuyển online
+            </span>
+          </div>
+
+          <!-- Numbers Comparison -->
+          <div class="grid grid-cols-2 gap-4 py-6">
+            <div class="bg-slate-950/60 rounded-2xl p-4 border border-slate-800/60">
+              <div class="text-xs text-slate-400 font-medium uppercase tracking-wider">Đường mặc định</div>
+              <div class="text-3xl font-extrabold text-slate-300 mt-1">80 <span class="text-sm font-normal text-slate-500">ms</span></div>
+              <div class="text-xs text-red-400 mt-1 flex items-center gap-1">▲ Giật lag & jitter</div>
+            </div>
+            <div class="bg-emerald-950/30 rounded-2xl p-4 border border-emerald-500/30 glow-green">
+              <div class="text-xs text-emerald-400 font-semibold uppercase tracking-wider">Qua đường GSP</div>
+              <div class="text-3xl font-extrabold text-emerald-400 mt-1">35 <span class="text-sm font-normal text-emerald-500/70">ms</span></div>
+              <div class="text-xs text-emerald-400 mt-1 flex items-center gap-1">▼ Giảm 56% độ trễ</div>
+            </div>
+          </div>
+
+          <!-- Realistic SVG Latency Chart -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs text-slate-500 font-mono">
+              <span>Độ ổn định đường truyền (30s gần nhất)</span>
+              <span>SEA Server</span>
+            </div>
+            <div class="h-28 w-full bg-slate-950/80 rounded-xl p-2 relative overflow-hidden border border-slate-800/50">
+              <svg class="w-full h-full" viewBox="0 0 400 100" preserveAspectRatio="none">
+                <!-- Grid Lines -->
+                <line x1="0" y1="25" x2="400" y2="25" stroke="#334155" stroke-dasharray="3,3" stroke-width="0.5" />
+                <line x1="0" y1="50" x2="400" y2="50" stroke="#334155" stroke-dasharray="3,3" stroke-width="0.5" />
+                <line x1="0" y1="75" x2="400" y2="75" stroke="#334155" stroke-dasharray="3,3" stroke-width="0.5" />
+
+                <!-- ISP Default Spiky Path (Grey) -->
+                <path d="M0,45 Q20,30 40,55 T80,40 T120,65 T160,35 T200,70 T240,40 T280,60 T320,38 T360,65 T400,45" fill="none" stroke="#64748b" stroke-width="2" />
+
+                <!-- GSP Smooth Path (Green) -->
+                <path d="M0,82 Q40,80 80,82 T160,81 T240,82 T320,81 T400,82" fill="none" stroke="#10b981" stroke-width="3" />
+                <!-- Green Glow Area -->
+                <path d="M0,82 Q40,80 80,82 T160,81 T240,82 T320,81 T400,82 L400,100 L0,100 Z" fill="rgba(16, 185, 129, 0.15)" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="pt-6 mt-4 border-t border-slate-800/80 flex flex-wrap gap-4 text-xs font-medium text-slate-300">
+            <span class="flex items-center gap-1.5 text-emerald-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              Không can thiệp vào game
+            </span>
+            <span class="flex items-center gap-1.5 text-emerald-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              Tự động nạp định tuyến /32
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="pt-28">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-3xl font-extrabold text-white">Công nghệ giảm giật lag chuẩn chuyên nghiệp</h2>
+        <p class="text-slate-400 mt-3 text-sm">Không bán lời hứa suông - Toàn bộ công nghệ được chứng minh bằng thông số mạng thực tế.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p-7 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-2xl mb-5 font-bold">🛣️</div>
+          <h3 class="text-lg font-bold text-white mb-2">Đường đi ngắn nhất</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Thay vì để nhà mạng ISP tự chọn tuyến đường vòng qua nhiều trạm, GSP dẫn gói tin đi thẳng qua Relay VPS có peering cáp quang trực tiếp tới cụm máy chủ game.</p>
+        </div>
+
+        <div class="p-7 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-2xl mb-5 font-bold">🎯</div>
+          <h3 class="text-lg font-bold text-white mb-2">Chỉ nắn đường cho game</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Chỉ dải IP của server trận đấu mới đi qua tunnel. Discord, nghe nhạc, YouTube, lướt web hay họp online vẫn đi mạng thường với tốc độ tối đa không bị ảnh hưởng.</p>
+        </div>
+
+        <div class="p-7 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-2xl mb-5 font-bold">🛡️</div>
+          <h3 class="text-lg font-bold text-white mb-2">An toàn 100% Anti-Cheat</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Không can thiệp file game, không đọc RAM, không injection. Hoạt động thuần túy ở tầng card mạng ảo Wintun giống như driver WireGuard của hệ điều hành.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="mt-28 p-10 rounded-3xl bg-gradient-to-r from-blue-900/40 via-slate-900 to-emerald-950/40 border border-slate-800 text-center relative overflow-hidden">
+      <h2 class="text-3xl font-extrabold text-white">Sẵn sàng trải nghiệm ping mượt mà?</h2>
+      <p class="text-slate-300 mt-2 max-w-xl mx-auto text-sm">Tải ngay bản phát hành Windows x64 mới nhất v0.2.2. Đã tích hợp sẵn cấu hình hệ sinh thái GSP.</p>
+      
+      <div class="mt-8 flex justify-center">
+        <a href="/download" class="px-8 py-4 rounded-xl font-bold text-base bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-xl shadow-emerald-500/30 transition flex items-center gap-3">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          <span>Tải GSP - GameStablePing v0.2.2 (.ZIP)</span>
+        </a>
+      </div>
+      <p class="text-xs text-slate-400 mt-4">Hỗ trợ Windows 10 & Windows 11 (64-bit). Không cần cài .NET runtime.</p>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500">
+    <p>© 2026 GSP - GameStablePing. All rights reserved. Powered by AniKenji Infrastructure.</p>
+  </footer>
+
+</body>
+</html>

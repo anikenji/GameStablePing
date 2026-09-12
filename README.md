@@ -1,22 +1,54 @@
-# Game Ping Booster
+# ⚡ GSP - GameStablePing
 
-Latency reducer for PUBG on Windows, aimed at players in Vietnam. Gameplay traffic is diverted
-through a VPS abroad whose route to the game servers beats the one the local ISP picks by default.
+**GameStablePing (GSP)** là giải pháp phần mềm tối ưu độ trễ và ổn định đường truyền (Latency Reducer & Ping Stabilizer) thế hệ mới, chuyên biệt cho game thủ thi đấu các tựa game như **PUBG, Counter-Strike 2, Valorant, Dota 2, Apex Legends** kết nối tới các cụm máy chủ khu vực Châu Á (Singapore, Tokyo, Hong Kong, Seoul).
 
-No injection, no reading game memory, no DLL hooks. The whole mechanism is a virtual network
-adapter plus entries in the Windows routing table: destinations belonging to the game go through
-the tunnel, everything else keeps using the normal path. Detecting that the game is running means
-listing processes, exactly as Task Manager does.
+---
 
-## Layout
+### 🚀 Điểm Khác Biệt Cốt Lõi
+
+* 🛡️ **An Toàn Tuyệt Đối Trước Mọi Anti-Cheat (Zero Injection):**
+  Hoàn toàn không can thiệp bộ nhớ game, không DLL Injection, không can thiệp socket. Hoạt động 100% ở tầng mạng hệ điều hành thông qua card mạng ảo **Wintun TUN (WireGuard)** và bảng định tuyến Windows Routing Table với cờ `store=active` (RAM-only, an toàn khi crash hoặc reboot).
+* 🎯 **Định Tuyến Động Cực Hẹp (/32 Dynamic Socket Detection):**
+  Tự động nhận diện socket trận đấu thực tế qua Win32 IP Helper API (`GetExtendedTcpTable`), chỉ dẫn hướng đúng IP máy chủ trận đấu qua đường hầm VPS, không làm ảnh hưởng đến Discord, Web, YouTube hay các dịch vụ nền khác.
+* 🌐 **Mạng Lưới Relay Đa Điểm & Tự Động Chọn Đường Thấp Nhất:**
+  Đo đạc độ trễ hai chiều (Landmark Probing) theo thời gian thực tới các cụm Relay tại Singapore, Nhật Bản, Hong Kong... và tự động chuyển hướng qua tuyến cáp quang biển tối ưu nhất.
+* 🔄 **Hệ Sinh Thái Động (Zero-Update Client):**
+  Danh sách máy chủ VPS và dải IP game được cập nhật tức thì qua Backend API (`https://gameapi.anikenji.tech`), người dùng không bao giờ cần cập nhật lại ứng dụng mỗi khi thêm VPS mới.
+* ⚡ **Hiệu Năng Cực Hạn:**
+  Relay daemon viết bằng **Go** với thuật toán điều khiển tắc nghẽn **BBR + FQ**, bộ đệm socket UDP 64MB; Client viết bằng **C# .NET 9** chạy 2 OS thread chuyên dụng sub-millisecond, đảm bảo giảm tối đa hiện tượng jitter và rớt gói (packet loss).
+
+---
+
+## Cấu trúc Dự Án (Layout)
 
 ```
-relay/     Go         -> runs on a Linux VPS
-client/    C# .NET 9  -> runs on the player's machine (Avalonia UI + Windows Service)
-profiles/  JSON       -> game IP ranges, fetched at runtime
-tools/     PowerShell -> build and validate profiles
-docs/                 -> design documentation
+server/    TypeScript / Bun -> Backend Server (Licence, Auth, Dynamic Relay Fleet & Web Landing Page)
+relay/     Go               -> Chạy trên các VPS Linux (Singapore, Tokyo, Hong Kong)
+client/    C# .NET 9        -> Chạy trên máy người dùng Windows (Avalonia UI + Windows Service)
+profiles/  JSON             -> Dải IP game & danh sách server, cập nhật động qua API
+tools/     PowerShell       -> Công cụ đo đạc và tự động tạo profile game
+docs/                       -> Tài liệu kiến trúc và hướng dẫn vận hành
 ```
+
+## Bắt Đầu Nhanh (Quick Start)
+
+### 1. Khởi chạy Backend Server (Control Plane)
+```bash
+bun run server/src/index.ts
+```
+Backend sẽ lắng nghe tại cổng 8080 và phục vụ giao diện Web Landing Page, xác thực OAuth2, API cấp token và quản trị danh sách VPS.
+
+### 2. Triển khai thêm VPS Relay mới (Chỉ 1 lệnh)
+Trên VPS Ubuntu/Debian mới (Singapore, Tokyo, Hong Kong), chỉ cần chạy:
+```bash
+curl -sSL https://gameapi.anikenji.tech/setup-vps.sh | sudo bash -s -- \
+  --name "Tokyo Relay 1" \
+  --location "Tokyo, Japan"
+```
+VPS sẽ tự động tối ưu hóa mạng BBR, cài đặt NAT và đăng ký vào Backend Server.
+
+---
+
 
 ## Where to start
 
