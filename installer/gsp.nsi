@@ -19,7 +19,8 @@ OutFile "../dist/gsp-setup.exe"
 InstallDir "$PROGRAMFILES64\GSP"
 InstallDirRegKey HKLM "Software\GSP" "Install_Dir"
 
-SetCompressor /SOLID lzma
+SetCompressor /SOLID zlib
+CRCCheck off
 
 ; Interface Settings
 !define MUI_ABORTWARNING
