@@ -11,24 +11,6 @@
       "status": "online",
       "minTier": 0,
       "weight": 100
-    },
-    {
-      "id": "sg-1",
-      "name": "Singapore Relay 1 (Primary)",
-      "location": "Singapore",
-      "endpoint": "118.68.245.241:51820",
-      "status": "online",
-      "minTier": 0,
-      "weight": 100
-    },
-    {
-      "id": "hk-1",
-      "name": "Hong Kong Relay 1",
-      "location": "Hong Kong",
-      "endpoint": "118.68.245.241:51821",
-      "status": "online",
-      "minTier": 0,
-      "weight": 90
     }
   ],
   "games": [
