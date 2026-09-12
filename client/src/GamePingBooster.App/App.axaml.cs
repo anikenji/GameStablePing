@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.IO;
-using System.ServiceProcess;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -32,17 +31,6 @@ public partial class App : Application
         try
         {
             if (Process.GetProcessesByName("gpb-service").Length > 0) return;
-
-            try
-            {
-                using var sc = new ServiceController("GamePingBooster");
-                if (sc.Status != ServiceControllerStatus.Running)
-                {
-                    sc.Start();
-                    return;
-                }
-            }
-            catch { }
 
             var servicePath = Path.Combine(AppContext.BaseDirectory, "gpb-service.exe");
             if (File.Exists(servicePath))

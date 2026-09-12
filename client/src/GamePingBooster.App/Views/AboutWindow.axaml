@@ -52,7 +52,7 @@
   <StackPanel Grid.Row="1" Margin="24,4,24,24" Spacing="16">
 
     <StackPanel Spacing="2">
-      <TextBlock Text="Game Ping Booster" Foreground="#F8FAFC" FontSize="18" FontWeight="Bold" />
+      <TextBlock Text="GSP - GameStablePing" Foreground="#F8FAFC" FontSize="18" FontWeight="Bold" />
       <TextBlock Classes="label" Text="{Binding VersionText}" />
     </StackPanel>
 

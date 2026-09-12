@@ -45,7 +45,7 @@ public sealed class SystemTray : IDisposable
             ToolTipText = ToolTipText(),
         };
 
-        var show = new NativeMenuItem("Show Game Ping Booster");
+        var show = new NativeMenuItem("Show GSP - GameStablePing");
         show.Click += (_, _) => _window.RestoreFromTray();
 
         var quit = new NativeMenuItem("Exit");

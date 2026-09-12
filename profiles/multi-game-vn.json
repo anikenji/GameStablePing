@@ -4,32 +4,31 @@
   "note": "Dynamic multi-game profile generated for GamePingBooster with Singapore, Tokyo, Hong Kong fleet.",
   "relays": [
     {
+      "id": "jp-1",
+      "name": "Tokyo Relay 1 (Japan)",
+      "location": "Tokyo, Japan",
+      "endpoint": "158.101.137.208:51820",
+      "status": "online",
+      "minTier": 0,
+      "weight": 100
+    },
+    {
       "id": "sg-1",
       "name": "Singapore Relay 1 (Primary)",
       "location": "Singapore",
-      "endpoint": "sg1.relay.gamepingbooster.com:51820",
-      "minTier": 0
-    },
-    {
-      "id": "sg-2",
-      "name": "Singapore Relay 2 (Backup)",
-      "location": "Singapore",
-      "endpoint": "sg2.relay.gamepingbooster.com:51820",
-      "minTier": 0
-    },
-    {
-      "id": "jp-1",
-      "name": "Tokyo Relay 1",
-      "location": "Tokyo, Japan",
-      "endpoint": "jp1.relay.gamepingbooster.com:51820",
-      "minTier": 0
+      "endpoint": "118.68.245.241:51820",
+      "status": "online",
+      "minTier": 0,
+      "weight": 100
     },
     {
       "id": "hk-1",
       "name": "Hong Kong Relay 1",
       "location": "Hong Kong",
-      "endpoint": "hk1.relay.gamepingbooster.com:51820",
-      "minTier": 0
+      "endpoint": "118.68.245.241:51821",
+      "status": "online",
+      "minTier": 0,
+      "weight": 90
     }
   ],
   "games": [

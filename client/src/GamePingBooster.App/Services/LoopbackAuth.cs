@@ -1,4 +1,4 @@
-﻿using System.Buffers.Binary;
+using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
@@ -160,7 +160,7 @@ public sealed class LoopbackAuth
                         "Try again, and if it keeps happening close any other copy of the app first.");
                 }
 
-                await RespondAsync(client, "Signed in", "You can close this tab and go back to Game Ping Booster.", deadline.Token).ConfigureAwait(false);
+                await RespondAsync(client, "Signed in", "You can close this tab and go back to GSP - GameStablePing.", deadline.Token).ConfigureAwait(false);
                 return code;
             }
         }

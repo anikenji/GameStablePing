@@ -291,6 +291,39 @@ const server = http.createServer(async (req, res) => {
     }
 
     // -------------------------------------------------------------
+    // 4b. Get Account Details for Account Window (/account)
+    // -------------------------------------------------------------
+    if (pathname === "/account" && (method === "GET" || method === "HEAD")) {
+      const authHeader = req.headers["authorization"] || "";
+      const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+
+      let userIdNum = 1;
+      const parts = token.split("_");
+      if (parts.length >= 4 && !isNaN(parseInt(parts[3]))) {
+        userIdNum = parseInt(parts[3]);
+      }
+
+      const dash = getUserDashboard(userIdNum);
+      if (!dash) {
+        return sendJson(401, { error: "This sign-in has expired. Sign in again." });
+      }
+
+      const planName = dash.subscription.plan_id === "dual_79k" ? "Dual (2 PC)" : (dash.subscription.plan_id === "trial" ? "Trial" : "Standard");
+      return sendJson(200, {
+        email: dash.user.email,
+        plan: planName,
+        status: dash.subscription.isActive ? "ACTIVE" : "EXPIRED",
+        expiresAt: dash.subscription.expires_at,
+        deviceCount: dash.devices.length,
+        deviceLimit: dash.subscription.max_devices
+      });
+    }
+
+    if (pathname === "/auth/logout" && method === "POST") {
+      return sendJson(200, { success: true });
+    }
+
+    // -------------------------------------------------------------
     // 5. Issue 150-byte Licence Token (/auth/token)
     // -------------------------------------------------------------
     if ((pathname === "/auth/token" || pathname === "/api/token") && method === "POST") {

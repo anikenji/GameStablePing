@@ -1862,9 +1862,24 @@ internal sealed class TunnelEngine : IAsyncDisposable
 
     private static IPEndPoint ParseEndpoint(string endpoint)
     {
-        if (!IPEndPoint.TryParse(endpoint, out var ep))
-            throw new FormatException($"Relay endpoint '{endpoint}' is invalid; expected ip:port.");
-        return ep;
+        if (IPEndPoint.TryParse(endpoint, out var ep))
+            return ep;
+
+        // Support domain:port (e.g. tokyo.gsp.anikenji.tech:51820)
+        var lastColon = endpoint.LastIndexOf(':');
+        if (lastColon > 0 && ushort.TryParse(endpoint[(lastColon + 1)..], out var port))
+        {
+            var host = endpoint[..lastColon];
+            try
+            {
+                var addresses = Dns.GetHostAddresses(host);
+                var v4 = addresses.FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetwork);
+                if (v4 is not null) return new IPEndPoint(v4, port);
+            }
+            catch { }
+        }
+
+        throw new FormatException($"Relay endpoint '{endpoint}' is invalid; expected ip:port or valid domain:port.");
     }
 
     public async ValueTask DisposeAsync()
