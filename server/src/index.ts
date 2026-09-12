@@ -111,6 +111,14 @@ const server = http.createServer(async (req, res) => {
     // -------------------------------------------------------------
     // Serve One-Click VPS Setup Script directly from this server
     // -------------------------------------------------------------
+    if ((pathname === "/bin/relayd" || pathname === "/relayd") && (method === "GET" || method === "HEAD")) {
+      const binPath = path.resolve("server/public/bin/relayd");
+      if (fs.existsSync(binPath)) {
+        res.writeHead(200, { "Content-Type": "application/octet-stream" });
+        return fs.createReadStream(binPath).pipe(res);
+      }
+    }
+
     if ((pathname === "/setup-vps.sh" || pathname === "/install.sh") && method === "GET") {
       const scriptPath = path.resolve("relay/deploy/setup-vps.sh");
       if (fs.existsSync(scriptPath)) {

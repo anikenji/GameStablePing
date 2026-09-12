@@ -93,7 +93,12 @@ if command -v netfilter-persistent >/dev/null 2>&1; then
     netfilter-persistent save >/dev/null 2>&1 || true
 fi
 
-# 4. Prepare /etc/relayd
+# 4. Download relayd binary
+say "Downloading relayd binary from $BACKEND_URL/bin/relayd..."
+curl -sSL "$BACKEND_URL/bin/relayd" -o /usr/local/bin/relayd || curl -sSL "$BACKEND_URL/relayd" -o /usr/local/bin/relayd
+chmod +x /usr/local/bin/relayd
+
+# 5. Prepare /etc/relayd
 mkdir -p /etc/relayd
 mkdir -p /var/log/relayd
 
